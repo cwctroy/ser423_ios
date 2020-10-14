@@ -97,4 +97,18 @@ class PlaceDescription {
         self.longitude = longitude
     }
     
+    func toJsonString() -> String {
+        var jsonString = "{\n"
+        
+        jsonString += "\"name\" : \"\(self.name)\"\n"
+        jsonString += "\"category\" : \"\(self.category)\"\n"
+        jsonString += "\"addressTitle\" : \"\(self.addressTitle)\"\n"
+        jsonString += "\"address\" : \"\(self.address)\"\n"
+        jsonString += "\"elevation\" : \"\(self.elevation)\"\n"
+        jsonString += "\"lattitude\" : \"\(self.lattitude)\"\n"
+        jsonString += "\"longitude\" : \"\(self.longitude)\"\n"
+        
+        jsonString += "}"
+        return jsonString
+    }
 }
