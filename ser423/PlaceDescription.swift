@@ -124,7 +124,6 @@ class PlaceDescription {
     }
     
     func toJsonString() -> String {
-<<<<<<< HEAD
         var jsonString = "";
         let dict:[String:Any] = ["name": self.name] as [String : Any]
         do {
@@ -132,19 +131,8 @@ class PlaceDescription {
             jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
         } catch let error as NSError {
             print(error)
+            
         }
-=======
-        var jsonString = "{\n"
-        
-        jsonString += "\"name\" : \"\(self.name)\",\n"
-        jsonString += "\"category\" : \"\(self.category)\",\n"
-        jsonString += "\"addressTitle\" : \"\(self.addressTitle)\",\n"
-        jsonString += "\"address\" : \"\(self.address)\",\n"
-        jsonString += "\"elevation\" : \"\(self.elevation)\",\n"
-        jsonString += "\"lattitude\" : \"\(self.lattitude)\",\n"
-        jsonString += "\"longitude\" : \"\(self.longitude)\"\n"
->>>>>>> 00435d199ba7943707965818dc5d0c2d0856b8cf
-        
         return jsonString
     }
 }
