@@ -124,8 +124,8 @@ class PlaceDescription {
     }
     
     func toJsonString() -> String {
-        var jsonString = "";
-        let dict:[String:Any] = ["name": self.name] as [String : Any]
+        var jsonString = ""
+        let dict:[String:Any] = ["name": self.name, "description": self.description, "category": self.category, "address-title": self.addressTitle, "address-street": self.addressStreet, "elevation": self.elevation, "latitude": self.latitude, "longitude": self.longitude] as [String : Any]
         do {
             let jsonData:Data = try JSONSerialization.data(withJSONObject: dict, options: JSONSerialization.WritingOptions.prettyPrinted)
             jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
@@ -134,5 +134,20 @@ class PlaceDescription {
             
         }
         return jsonString
+    }
+    
+    func toString() -> String {
+        var ret = ""
+        
+        ret += "Name: \(self.name)\n"
+        ret += "Description: \(self.description)\n"
+        ret += "Category: \(self.category)\n"
+        ret += "Address Title: \(self.addressTitle)\n"
+        ret += "Address Street \(self.addressStreet)\n"
+        ret += "Elevation: \(self.elevation)\n"
+        ret += "Latitude: \(self.latitude)\n"
+        ret += "Longitude: \(self.longitude)\n"
+        
+        return ret
     }
 }
