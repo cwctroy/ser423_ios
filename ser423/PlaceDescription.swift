@@ -18,21 +18,47 @@ class PlaceDescription {
     private var description: String
     private var category: String
     private var addressTitle: String
-    private var address = [String]()
+    private var addressStreet: String
     private var elevation: Int
-    private var lattitude: Double
+    private var latitude: Double
     private var longitude: Double
     
-    init?(name :String, description: String, category: String, addressTitle: String, address: [String], elevation: Int, lattitude: Double, longitude: Double)
+    init?(name :String, description: String, category: String, addressTitle: String, addressStreet: String, elevation: Int, latitude: Double, longitude: Double)
     {
         self.name = name
         self.description = description
         self.category = category
         self.addressTitle = addressTitle
-        self.address = address
+        self.addressStreet = addressStreet
         self.elevation = elevation
-        self.lattitude = lattitude
+        self.latitude = latitude
         self.longitude = longitude
+    }
+    
+    init (jsonString: String) {
+        self.name = ""
+        self.description = ""
+        self.category = ""
+        self.addressTitle = ""
+        self.addressStreet = ""
+        self.elevation = 0
+        self.latitude = 0.0
+        self.longitude = 0.0
+        if let data: Data = jsonString.data(using: String.Encoding.utf8){
+            do {
+                let dict = try JSONSerialization.jsonObject(with: data, options:.mutableContainers) as?[String:Any]
+                self.name = (dict!["name"] as? String)!
+                self.description = (dict!["description"] as? String)!
+                self.category = (dict!["category"] as? String)!
+                self.addressTitle = (dict!["address-title"] as? String)!
+                self.addressStreet = (dict!["address-street"] as? String)!
+                self.elevation = (dict!["elevation"] as? Int)!
+                self.latitude = (dict!["latitude"] as? Double)!
+                self.longitude = (dict!["longitude"] as? Double)!
+            } catch {
+                print ("unable to convert dictionary")
+            }
+        }
     }
     
     //GETTERS
@@ -52,8 +78,8 @@ class PlaceDescription {
         return self.addressTitle
     }
     
-    func getaddress() -> [String] {
-        return self.address
+    func getaddress() -> String {
+        return self.addressStreet
     }
     
     func getElevation() -> Int {
@@ -61,7 +87,7 @@ class PlaceDescription {
     }
     
     func getLattitude() -> Double {
-        return self.lattitude
+        return self.latitude
     }
     
     func getLotgitude() -> Double {
@@ -81,16 +107,16 @@ class PlaceDescription {
         self.addressTitle = addressTitle
     }
     
-    func setAddress(address: [String]) {
-        self.address = address
+    func setAddress(addressStreet: String) {
+        self.addressStreet = addressStreet
     }
     
     func setElevation(elevation: Int) {
         self.elevation = elevation
     }
     
-    func setLattitude(lattitude: Double) {
-        self.lattitude = lattitude
+    func setLattitude(latitude: Double) {
+        self.latitude = latitude
     }
     
     func setLongitude(longitude: Double) {
@@ -98,17 +124,15 @@ class PlaceDescription {
     }
     
     func toJsonString() -> String {
-        var jsonString = "{\n"
+        var jsonString = "";
+        let dict:[String:Any] = ["name": self.name] as [String : Any]
+        do {
+            let jsonData:Data = try JSONSerialization.data(withJSONObject: dict, options: JSONSerialization.WritingOptions.prettyPrinted)
+            jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
+        } catch let error as NSError {
+            print(error)
+        }
         
-        jsonString += "\"name\" : \"\(self.name)\"\n"
-        jsonString += "\"category\" : \"\(self.category)\"\n"
-        jsonString += "\"addressTitle\" : \"\(self.addressTitle)\"\n"
-        jsonString += "\"address\" : \"\(self.address)\"\n"
-        jsonString += "\"elevation\" : \"\(self.elevation)\"\n"
-        jsonString += "\"lattitude\" : \"\(self.lattitude)\"\n"
-        jsonString += "\"longitude\" : \"\(self.longitude)\"\n"
-        
-        jsonString += "}"
         return jsonString
     }
 }
