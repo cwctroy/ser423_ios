@@ -15,9 +15,43 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let jsonString = " { \"name\" : \"ASU-Poly\", \"description\" : \"Home of ASU's Software Engineering Programs\", \"category\" : \"School\", \"address-title\" : \"ASU Software Engineering\", \"address-street\" : \"7171 E Sonoran Arroyo Mall\nPeralta Hall 230\nMesa AZ 85212\", \"elevation\" : 1384.0, \"latitude\" : 33.306388, \"longitude\" : -111.679121 }"
+    
+    @IBOutlet weak var nameContent: UITextField!
+    
+    @IBOutlet weak var descriptionContent: UITextField!
+    
+    @IBOutlet weak var categoryContent: UITextField!
+    
+    @IBOutlet weak var addressTitleContent: UITextField!
+    
+    @IBOutlet weak var addressStreetContent: UITextField!
+    
+    @IBOutlet weak var elevationContent: UITextField!
+    
+    @IBOutlet weak var latitudeContent: UITextField!
 
+    @IBOutlet weak var longitudeContent: UITextField!
+    
+    
+    @IBAction func ClickMe(_ sender: Any) {
+        let pd: PlaceDescription = PlaceDescription(jsonString: jsonString)
+        
+        nameContent.text=pd.getName()
+        descriptionContent.text=pd.getDescription()
+        categoryContent.text=pd.getCategory()
+        addressTitleContent.text=pd.getAddresTitle()
+        addressStreetContent.text=pd.getaddressStreet()
+        elevationContent.text="\(pd.getElevation())"
+        latitudeContent.text="\(pd.getLatitude())"
+        longitudeContent.text="\(pd.getLongitude())"
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
     }
 

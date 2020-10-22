@@ -78,7 +78,7 @@ class PlaceDescription {
         return self.addressTitle
     }
     
-    func getaddress() -> String {
+    func getaddressStreet() -> String {
         return self.addressStreet
     }
     
@@ -86,11 +86,11 @@ class PlaceDescription {
         return self.elevation
     }
     
-    func getLattitude() -> Double {
+    func getLatitude() -> Double {
         return self.latitude
     }
     
-    func getLotgitude() -> Double {
+    func getLongitude() -> Double {
         return self.longitude
     }
     
