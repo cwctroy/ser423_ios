@@ -16,7 +16,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let jsonString = " { \"name\" : \"ASU-Poly\", \"description\" : \"Home of ASU's Software Engineering Programs\", \"category\" : \"School\", \"address-title\" : \"ASU Software Engineering\", \"address-street\" : \"7171 E Sonoran Arroyo Mall\nPeralta Hall 230\nMesa AZ 85212\", \"elevation\" : 1384.0, \"latitude\" : 33.306388, \"longitude\" : -111.679121 }"
+    let jsonString = " { \"name\" : \"ASU-Poly\", \"description\" : \"Home of ASU's Software Engineering Programs\", \"category\" : \"School\", \"address-title\" : \"ASU Software Engineering\", \"address-street\" : \"7171 E Sonoran Arroyo Mall Peralta Hall 230 Mesa AZ 85212\", \"elevation\" : 1384.0, \"latitude\" : 33.306388, \"longitude\" : -111.679121 }"
     
     @IBOutlet weak var nameContent: UITextField!
     
