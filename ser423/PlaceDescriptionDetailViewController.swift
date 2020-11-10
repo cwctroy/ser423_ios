@@ -16,8 +16,6 @@ import UIKit
 
 class PlaceDescriptionDetailView: UIViewController {
     
-    let jsonString = " { \"name\" : \"ASU-Poly\", \"description\" : \"Home of ASU's Software Engineering Programs\", \"category\" : \"School\", \"address-title\" : \"ASU Software Engineering\", \"address-street\" : \"7171 E Sonoran Arroyo Mall Peralta Hall 230 Mesa AZ 85212\", \"elevation\" : 1384.0, \"latitude\" : 33.306388, \"longitude\" : -111.679121 }"
-    
     var selectedPlaceDescription:PlaceDescription = PlaceDescription()
 
     
@@ -45,6 +43,12 @@ class PlaceDescriptionDetailView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         nameContent.text = self.selectedPlaceDescription.getName()
+        categoryContent.text = self.selectedPlaceDescription.getCategory()
+        addressTitleContent.text = self.selectedPlaceDescription.getAddresTitle()
+        addressStreetContent.text = self.selectedPlaceDescription.getaddressStreet()
+        elevationContent.text = String(self.selectedPlaceDescription.getElevation())
+        latitudeContent.text = String(self.selectedPlaceDescription.getLatitude())
+        
     }
 
 }
