@@ -14,9 +14,12 @@
  
 import UIKit
 
-class ViewController: UIViewController {
+class PlaceDescriptionDetailView: UIViewController {
     
     let jsonString = " { \"name\" : \"ASU-Poly\", \"description\" : \"Home of ASU's Software Engineering Programs\", \"category\" : \"School\", \"address-title\" : \"ASU Software Engineering\", \"address-street\" : \"7171 E Sonoran Arroyo Mall Peralta Hall 230 Mesa AZ 85212\", \"elevation\" : 1384.0, \"latitude\" : 33.306388, \"longitude\" : -111.679121 }"
+    
+    var selectedPlaceDescription:PlaceDescription = PlaceDescription()
+
     
     @IBOutlet weak var nameContent: UITextField!
     
@@ -36,25 +39,13 @@ class ViewController: UIViewController {
     
     
     @IBAction func ClickMe(_ sender: Any) {
-        let pd: PlaceDescription = PlaceDescription(jsonString: jsonString)
-        
-        nameContent.text=pd.getName()
-        descriptionContent.text=pd.getDescription()
-        categoryContent.text=pd.getCategory()
-        addressTitleContent.text=pd.getAddresTitle()
-        addressStreetContent.text=pd.getaddressStreet()
-        elevationContent.text="\(pd.getElevation())"
-        latitudeContent.text="\(pd.getLatitude())"
-        longitudeContent.text="\(pd.getLongitude())"
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        nameContent.text = self.selectedPlaceDescription.getName()
     }
-
 
 }
 

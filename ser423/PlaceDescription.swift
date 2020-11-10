@@ -23,6 +23,19 @@ class PlaceDescription {
     private var latitude: Double
     private var longitude: Double
     
+    private var defaultString: String = "unknown"
+    
+    init() {
+        self.name = defaultString
+        self.description = defaultString
+        self.category = defaultString
+        self.addressTitle = defaultString
+        self.addressStreet = defaultString
+        self.elevation = 0
+        self.latitude = 0.0
+        self.longitude = 0.0
+    }
+    
     init?(name :String, description: String, category: String, addressTitle: String, addressStreet: String, elevation: Int, latitude: Double, longitude: Double)
     {
         self.name = name
