@@ -65,5 +65,8 @@ class PlaceLibrary {
         return ret
     }
     
+    func getKeys() -> Dictionary<String, PlaceDescription>.Keys {
+        return places.keys;
+    }
     
 }

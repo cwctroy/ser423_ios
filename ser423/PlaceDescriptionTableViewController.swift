@@ -15,13 +15,40 @@ class PlaceDescriptionTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        NSLog("viewDidLoad")
+        
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        
+        let addButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(PlaceDescriptionTableViewController.addPlaceDescription))
+        
+        self.navigationItem.rightBarButtonItem = addButton
+        
+        if let path = Bundle.main.path(forResource: "places", ofType: "json") {
+            do {
+                let jsonStr:String = try String(contentsOfFile:path)
+                let data:Data = jsonStr.data(using: String.Encoding.utf8)!
+                let dict:[String:Any] = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String:Any]
+                for aPlaceDescriptionName:String in dict.keys {
+                    let aPlaceDescription:PlaceDescription = PlaceDescription(jsonString: dict[aPlaceDescriptionName] as! String)
+                    self.placeDescriptionCollection.add(pd: aPlaceDescription)
+                }
+            } catch {
+                print("contents of places.json could not be loaded")
+            }
         }
+        self.title = "Place Description List"
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        print("tableView editing row at: \(indexPath.row)")
+        if editingStyle == .delete {
+            let selectedPlaceDescription:PlaceDescription = placeDescriptionCollection.get(pdName: names[indexPath.row])
+            print("deleting place description \(selectedPlaceDescription.getName())")
+            placeDescriptionCollection.remove(pdName: selectedPlaceDescription.getName())
+            names = Array(placeDescriptionCollection.getKeys())
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
     
 
     // MARK: - Table view data source
@@ -44,40 +71,52 @@ class PlaceDescriptionTableViewController: UITableViewController {
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    @objc func addPlaceDescription() {
+        print("add PlaceDescription button clicked")
+        
+        let promptND = UIAlertController(title: "New PlaceDescription", message: "Enter details", preferredStyle: UIAlertController.Style.alert)
+        promptND.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
+        promptND.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (action) -> Void in
+            let newName:String = (promptND.textFields?[0].text == "") ? "unknown" : (promptND.textFields?[0].text)!
+            
+            let newDescription:String = (promptND.textFields?[1].text == "") ? "unknown" : (promptND.textFields?[1].text)!
+            
+            let newCategory:String = (promptND.textFields?[2].text == "") ? "unknown" : (promptND.textFields?[2].text)!
+            
+            let newAddressTitle:String = (promptND.textFields?[3].text == "") ? "unknown" : (promptND.textFields?[3].text)!
+            
+            let newAddressStreet:String = (promptND.textFields?[4].text == "") ? "unknown" : (promptND.textFields?[4].text)!
+            
+            let newElevation:Int = (promptND.textFields?[5].text == "") ? 0 : Int((promptND.textFields?[5].text)!)!
+            
+            let newLatitude:Double = (promptND.textFields?[6].text == "") ? 0 : Double((promptND.textFields?[6].text)!)!
+            
+            let newLongitude:Double = (promptND.textFields?[7].text == "") ? 0 : Double((promptND.textFields?[7].text)!)!
+            
+            let aPlaceDescription:PlaceDescription = PlaceDescription(name: newName, description: newDescription, category: newCategory, addressTitle: newAddressTitle, addressStreet: newAddressStreet, elevation: newElevation, latitude: newLatitude, longitude: newLongitude)!
+            
+            self.placeDescriptionCollection.add(pd: aPlaceDescription)
+            
+            self.tableView.reloadData()
+        }))
+        promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Name"
+        })
+        promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Description"
+        })
+        promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Category"
+        })
+        promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Address Title"
+        })
+        promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Address Street"
+        })
+        promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Elevation"
+        })
+        promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Latitude"
+        })
+        promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Longitude"
+        })
+        present(promptND, animated: true, completion: nil)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     
     // MARK: - Navigation
