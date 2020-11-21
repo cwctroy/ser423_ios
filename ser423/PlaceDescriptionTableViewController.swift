@@ -9,7 +9,6 @@ import UIKit
 
 class PlaceDescriptionTableViewController: UITableViewController {
     
-    //TODO: Load this array from json in onCreate
     var placeDescriptionCollection:PlaceLibrary = PlaceLibrary()
     var names:[String] = [String]()
 
@@ -24,12 +23,13 @@ class PlaceDescriptionTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = addButton
         
         if let path = Bundle.main.path(forResource: "places", ofType: "json") {
+            print("accessed json file")
             do {
                 let jsonStr:String = try String(contentsOfFile:path)
                 let data:Data = jsonStr.data(using: String.Encoding.utf8)!
                 let dict:[String:Any] = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String:Any]
                 for aPlaceDescriptionName:String in dict.keys {
-                    let aPlaceDescription:PlaceDescription = PlaceDescription(jsonString: dict[aPlaceDescriptionName] as! String)
+                    let aPlaceDescription:PlaceDescription = PlaceDescription(dict: dict[aPlaceDescriptionName] as! [String:Any])
                     self.placeDescriptionCollection.add(pd: aPlaceDescription)
                 }
             } catch {

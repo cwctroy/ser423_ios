@@ -11,32 +11,17 @@ class PlaceLibrary {
     
     var places:[String:PlaceDescription] = [String:PlaceDescription]()
     
-    init(){
-        if let path = Bundle.main.path(forResource: "places", ofType: "json"){
-            do {
-                let jsonStr:String = try String(contentsOfFile:path)
-                let data:Data = jsonStr.data(using: String.Encoding.utf8)!
-                let dict:[String:Any] = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String:Any]
-                for pdName:String in dict.keys {
-                    let aPlaceDescription:PlaceDescription = PlaceDescription(jsonString: dict[pdName] as! String)
-                    self.places[pdName] = aPlaceDescription
-                }
-            } catch {
-                print("contents of places.json could not be loaded")
-                }
-            }    }
+    init(){}
     
-    func add(pd:PlaceDescription) -> Bool {
-        var status:Bool = false
+    
+    func add(pd:PlaceDescription) {
         if places[pd.getName()] == nil {
             places[pd.getName()] = pd;
-            status = true;
             print("Place: \(pd.getName()) added to list")
         }
         else {
             print("Place: \(pd.getName()) already exists in list")
         }
-        return status
     }
     
     func remove(pdName:String) -> Bool {

@@ -171,9 +171,9 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YwA-Wp-Uug">
-                                <rect key="frame" x="184" y="728" width="46" height="30"/>
+                                <rect key="frame" x="192" y="728" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Add"/>
                                 <connections>
                                     <action selector="ClickMe:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FVg-9v-OTx"/>
                                 </connections>

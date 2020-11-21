@@ -74,6 +74,17 @@ class PlaceDescription {
         }
     }
     
+    public init(dict:[String:Any]) {
+        self.name = dict["name"] == nil ? "unknown" : dict["name"] as! String
+        self.description = dict["description"] == nil ? "unknown" : dict["description"] as! String
+        self.category = dict["category"] == nil ? "unknown" : dict["category"] as! String
+        self.addressTitle = dict["address-title"] == nil ? "unknown" : dict["address-title"] as! String
+        self.addressStreet = dict["address-street"] == nil ? "unknown" : dict["address-street"] as! String
+        self.elevation = dict["elevation"] == nil ? 0 : dict["elevation"] as! Int
+        self.latitude = dict["latitude"] == nil ? 0.0 : dict["elevation"] as! Double
+        self.longitude = dict["longitude"] == nil ? 0.0 : dict["longitude"] as! Double
+    }
+    
     //GETTERS
     func getName() -> String {
         return self.name
