@@ -36,6 +36,7 @@ class PlaceDescriptionTableViewController: UITableViewController {
                 print("contents of places.json could not be loaded")
             }
         }
+        self.names = Array(placeDescriptionCollection.getKeys()).sorted()
         self.title = "Place Description List"
     }
     
@@ -45,7 +46,7 @@ class PlaceDescriptionTableViewController: UITableViewController {
             let selectedPlaceDescription:PlaceDescription = placeDescriptionCollection.get(pdName: names[indexPath.row])
             print("deleting place description \(selectedPlaceDescription.getName())")
             placeDescriptionCollection.remove(pdName: selectedPlaceDescription.getName())
-            names = Array(placeDescriptionCollection.getKeys())
+            self.names = Array(placeDescriptionCollection.getKeys())
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -96,7 +97,7 @@ class PlaceDescriptionTableViewController: UITableViewController {
             let aPlaceDescription:PlaceDescription = PlaceDescription(name: newName, description: newDescription, category: newCategory, addressTitle: newAddressTitle, addressStreet: newAddressStreet, elevation: newElevation, latitude: newLatitude, longitude: newLongitude)!
             
             self.placeDescriptionCollection.add(pd: aPlaceDescription)
-            
+            self.names = Array(self.placeDescriptionCollection.getKeys())
             self.tableView.reloadData()
         }))
         promptND.addTextField(configurationHandler: {(textField: UITextField!) in textField.placeholder = "Name"
